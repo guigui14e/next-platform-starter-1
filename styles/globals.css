@@ -1,157 +1,395 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@import 'tailwindcss';
-
-@theme {
-    --background-image-noise: linear-gradient(
-            to bottom,
-            color-mix(in oklab, var(--color-neutral-950) 0%, transparent),
-            color-mix(in oklab, var(--color-neutral-950) 100%, transparent)
-        ),
-        url('/images/noise.png');
-    --color-primary: #2bdcd2;
-    --color-primary-content: #171717;
-    --color-secondary: #016968;
-    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-@layer base {
-    h1 {
-        @apply text-4xl font-bold tracking-tight sm:text-5xl;
-    }
-
-    h2 {
-        @apply text-2xl font-bold sm:text-3xl;
-    }
-
-    h3 {
-        @apply text-xl font-bold;
-    }
-
-    a:not(.btn) {
-        @apply underline transition hover:opacity-80;
-    }
-
-    :not(pre) > code {
-        @apply px-1 py-0.5 font-mono rounded bg-neutral-900 text-yellow-200;
-        font-size: 0.9em;
-    }
+.pagination-list {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  padding: 0;
 }
 
-@layer components {
-    .markdown {
-        > * {
-            @apply my-4;
-        }
+.pagination-list li {
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-        :where(h1, h2) {
-            @apply mt-12 mb-6;
-        }
+.pagination-list li.active {
+  background-color: #007bff;
+  color: #fff;
+  pointer-events: none;
+}
 
-        > :first-child {
-            @apply mt-0;
-        }
+.pagination-list li:hover {
+  background-color: #007bff;
+  color: #fff;
+}
 
-        > :last-child {
-            @apply mb-0;
-        }
-    }
+.performance-checklist {
+  margin-top: 10px;
+  padding: 0;
+}
 
-    .btn {
-        @apply inline-flex items-center justify-center gap-2 font-bold text-center no-underline transition-colors cursor-pointer bg-primary text-primary-content;
-        padding: var(--btn-py, 0.875rem) var(--btn-px, 1.25rem);
-        font-size: var(--btn-font-size, 0.875rem);
-        border-radius: var(--btn-border-radius, 0.25rem);
+.performance-checklist ul {
+  list-style: none;
+  display: flex;
+  /* Affiche les cases en ligne */
+  gap: 15px;
+  /* Espacement entre les cases */
+  padding: 0;
+  margin: 0;
+}
 
-        &:hover {
-            @apply bg-primary/85;
-        }
+.performance-checklist li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  /* Espacement entre la case et le texte */
+}
 
-        &:disabled {
-            @apply cursor-default text-neutral-400 bg-neutral-700;
-        }
-    }
+.performance-checklist .checkbox {
+  width: 15px;
+  height: 15px;
+  border: 2px solid #ccc;
+  /* Bordure grise */
+  border-radius: 3px;
+  /* Légers arrondis */
+  background-color: transparent;
+  display: inline-block;
+  position: relative;
+}
 
-    .btn-lg {
-        --btn-font-size: 1.125rem;
-        --btn-px: 1.5rem;
-        --btn-py: 1.125rem;
-    }
+.performance-checklist .checkbox.checked {
+  background-color: #00cc00;
+  /* Vert pour les cases cochées */
+  border-color: #00cc00;
+  /* Bordure verte */
+}
 
-    .input {
-        @apply px-4 py-3 text-sm border rounded-sm border-neutral-300 text-neutral-900 focus:border-primary focus:outline-3 focus:outline-primary/30;
-    }
+.performance-checklist .checkbox.checked::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  /* Dessine un "V" */
+}
+/* Styliser le conteneur du logo */
+.logo-link {
+  display: block;
+  text-align: center;
+}
 
-    .diff {
-        direction: ltr;
-        container-type: inline-size;
-        grid-template-columns: auto 1fr;
+/* Ajuster la taille et le positionnement du logo */
+.logo-img {
+  width: 150px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
 
-        &:focus-visible,
-        &:has(.diff-item-1:focus),
-        &:has(.diff-item-2:focus) {
-            outline: 2px solid var(--color-gray-400);
-            outline-offset: 1px;
-        }
-        &:focus-visible {
-            .diff-resizer {
-                min-width: 80cqi;
-                max-width: 80cqi;
-            }
-        }
-        &:has(.diff-item-2:focus-visible) {
-            .diff-resizer {
-                min-width: 20cqi;
-                max-width: 20cqi;
-            }
-        }
-    }
+/* Effet au survol */
+.logo-img:hover {
+  transform: scale(1.1);
+}
+.form-control {
+  background-color: #121212;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 14px;
+}
 
-    .diff-resizer {
-        width: 50cqi;
-        max-width: calc(100cqi - 1rem);
-        transform: scaleY(3) translate(0.35rem, 0.08rem);
-        transform-origin: 100% 100%;
-        clip-path: inset(calc(100% - 0.75rem) 0 0 calc(100% - 0.75rem));
-        transition: min-width 0.3s ease-out, max-width 0.3s ease-out;
-    }
+.form-control option {
+  background-color: #121212;
+  color: #fff;
+}
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 
-    .diff-item-2 {
-        &:after {
-            content: '';
-            width: 1.25rem;
-            height: 1.875rem;
-            position: absolute;
-            top: 50%;
-            right: 1px;
-            bottom: 0;
-            translate: 50% -50%;
-            background: color-mix(in oklab, var(--color-white) 50%, transparent);
-            border-radius: 9999px;
-            border: 2px solid var(--color-white);
-            backdrop-filter: blur(8px);
-            pointer-events: none;
-            z-index: 2;
-            box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-gray-900) 5%, transparent),
-                0 1px 3px 0 color-mix(in oklab, var(--color-gray-900) 20%, transparent);
-        }
-        @supports (-webkit-overflow-scrolling: touch) and (overflow: -webkit-paged-x) {
-            &:after {
-                content: none;
-            }
-        }
-    }
+.pagination-button {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
 
-    .diff-item-1,
-    .diff-item-2 {
-        > * {
-            height: 100%;
-            width: 100cqi;
-            position: absolute;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-    }
+.pagination-button.active {
+  background-color: #ff4c4c;
+}
+
+.pagination-button:hover {
+  background-color: #555;
+}
+/* Style pour l'animation de défilement automatique des marques */
+@keyframes scrollMarques {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Appliquer l'animation de défilement */
+.animate-marques {
+  display: flex;
+  animation: scrollMarques 30s linear infinite; /* Durée modifiée pour ralentir l'animation */
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.section-title {
+  background-color: #1F2937; /* Couleur de fond */
+  color: #ff0000; /* Couleur du texte */
+  font-size: 1.5rem; /* Taille de police */
+  font-weight: bold; /* Texte en gras */
+  text-align: center; /* Centrer le texte */
+  padding: 10px 20px; /* Espacement interne */
+  border-radius: 8px; /* Coins arrondis */
+  margin-bottom: 20px; /* Espacement en bas */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombre */
+}
+
+
+.pagination-button {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px; /* Bordure arrondie complète */
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.pagination-button.active {
+  background-color: #2563eb; /* Couleur principale pour la page active */
+  color: #ffffff;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pagination-button:hover {
+  background-color: #1e40af; /* Couleur plus sombre au survol */
+  color: #ffffff;
+}
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
+.double-slider-box {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+  max-width: 300px;
+  margin: auto;
+}
+
+
+
+.input-box {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.min-box,
+.max-box {
+  width: 50%;
+}
+
+.min-box {
+  margin-right: 10px;
+}
+.max-box input {
+  float: right;
+}
+input[type="number"] {
+  width: 40px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.min-tooltip,
+.max-tooltip {
+  position: absolute;
+  top: -35px;
+  font-size: 12px;
+  color: #555;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.min-tooltip {
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.max-tooltip {
+  right: 0;
+  transform: translateX(50%);
+}
+/* Chrome, Safari, Edge, and Opera */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.logo-container {
+  display: flex; /* Active le mode Flexbox */
+  justify-content: center; /* Centre horizontalement */
+  align-items: center; /* Centre verticalement */
+  margin-bottom: 10px; /* Ajoute un espacement inférieur */
+  text-align: center; /* Optionnel, au cas où */
+}
+
+.logo-image {
+  width: 300px; /* Largeur de l'image */
+  height: auto; /* Conserve les proportions */
+  max-width: 100%; /* Responsive */
+}
+
+.rc-slider-track {
+  background-color: red !important;
+}
+.rc-slider-handle {
+  border-color: red !important;
+}
+
+/* Animations pour les changements de variantes de véhicules */
+@keyframes fadeZoom {
+  0% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseOnce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+@keyframes fadeFlash {
+  0% {
+    opacity: 0;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 20px 5px rgba(239, 68, 68, 0.6);
+  }
+  100% {
+    opacity: 0;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+  }
+}
+
+.animate-fadeZoom {
+  animation: fadeZoom 0.6s ease-in-out;
+}
+
+.animate-pulseOnce {
+  animation: pulseOnce 0.5s ease-in-out;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.5s ease-out;
+}
+
+.animate-scaleBounce {
+  animation: scaleBounce 0.6s ease-in-out;
+}
+
+/* Animation pour les nouveaux éléments qui apparaissent */
+@keyframes fadeInSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fadeInSlide {
+  animation: fadeInSlide 0.5s ease-out;
+}
+
+/* Animation subtile pour indiquer une mise à jour */
+@keyframes highlightUpdate {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.3);
+  }
+}
+
+.animate-highlightUpdate {
+  animation: highlightUpdate 1s ease-in-out;
 }
